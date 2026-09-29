@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="交互式比较 CNN、RNN、LSTM 与 GRU 的结构、信息流和适用问题。"
+    />
+    <title>神经网络架构交互实验室</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="page-width hero__content">
+        <p class="eyebrow">NEURAL NETWORK VISUALIZER</p>
+        <h1>从空间特征到时间记忆</h1>
+        <p class="hero__lead">
+          用同一套交互语言理解 CNN、RNN、LSTM 与 GRU，并观察它们如何共同完成连续背光帧场景分类。
+        </p>
+        <div class="concepts" aria-label="核心概念">
+          <article>
+            <span class="concepts__index">01</span>
+            <h2>空间特征</h2>
+            <p>CNN 在单帧中寻找局部结构、区域变化与层级特征。</p>
+          </article>
+          <article>
+            <span class="concepts__index">02</span>
+            <h2>时间记忆</h2>
+            <p>RNN 家族将前一时刻状态带入当前计算，理解连续变化。</p>
+          </article>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-width">
+      <section class="lab" aria-labelledby="lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">01 · 架构实验</p>
+            <h2 id="lab-title">选择模型，观察信息如何流动</h2>
+          </div>
+          <p>所有模型使用相同的播放控制，方便直接比较。</p>
+        </div>
+
+        <div class="model-tabs" role="tablist" aria-label="选择神经网络模型">
+          <button id="model-cnn" class="model-tab is-active" role="tab" aria-selected="true" data-model="cnn" type="button">CNN</button>
+          <button id="model-rnn" class="model-tab" role="tab" aria-selected="false" data-model="rnn" type="button">RNN</button>
+          <button id="model-lstm" class="model-tab" role="tab" aria-selected="false" data-model="lstm" type="button">LSTM</button>
+          <button id="model-gru" class="model-tab" role="tab" aria-selected="false" data-model="gru" type="button">GRU</button>
+        </div>
+
+        <div class="visualizer-shell">
+          <div class="visualizer-shell__header">
+            <div>
+              <p class="model-family" id="model-family">卷积神经网络</p>
+              <h3 id="model-title">CNN 空间特征提取</h3>
+            </div>
+            <div class="step-chip" aria-label="当前步骤">
+              <span>STEP</span>
+              <strong id="step-number">01</strong>
+            </div>
+          </div>
+
+          <div id="model-diagram" class="model-diagram" aria-label="模型架构图">
+            <div class="diagram-placeholder" aria-hidden="true">
+              <span>输入</span><i></i><span>特征提取</span><i></i><span>输出</span>
+            </div>
+          </div>
+
+          <p id="step-description" class="step-description" aria-live="polite">
+            输入图像以通道、高度和宽度三个维度进入网络。
+          </p>
+          <div id="gate-controls" class="gate-controls"></div>
+
+          <div class="playback-controls" aria-label="架构播放控制">
+            <button id="play-button" class="button button--primary" type="button">播放</button>
+            <button id="pause-button" class="button" type="button">暂停</button>
+            <button id="step-button" class="button" type="button">单步</button>
+            <button id="reset-button" class="button button--quiet" type="button">重置</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="static-model-summaries" class="comparison" aria-labelledby="comparison-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">02 · 快速对比</p>
+            <h2 id="comparison-title">四种架构解决什么问题？</h2>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>模型</th><th>核心能力</th><th>记忆方式</th><th>适合任务</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>CNN</th><td>空间局部特征提取</td><td>无时间记忆</td><td>单帧图像、区域与纹理</td></tr>
+              <tr><th>RNN</th><td>按时间顺序处理输入</td><td>单一隐藏状态</td><td>短序列与基础时序任务</td></tr>
+              <tr><th>LSTM</th><td>选择性保存长期信息</td><td>细胞状态与三类门控</td><td>较长序列、长期依赖</td></tr>
+              <tr><th>GRU</th><td>轻量时序建模</td><td>隐藏状态与两类门控</td><td>实时分类、资源受限部署</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="backlight-demo" class="scenario-section" aria-labelledby="scenario-section-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">03 · 项目应用</p>
+            <h2 id="scenario-section-title">连续背光帧场景分类</h2>
+          </div>
+          <p>先由 CNN 提取每帧空间分布，再由 GRU 汇总连续变化，最终输出场景概率。</p>
+        </div>
+
+        <div class="scenario-tabs" role="tablist" aria-label="选择背光场景">
+          <button id="scenario-reading" class="scenario-tab is-active" type="button" role="tab" aria-selected="true" data-scenario="reading">阅读 / 浏览</button>
+          <button id="scenario-video" class="scenario-tab" type="button" role="tab" aria-selected="false" data-scenario="video">视频 / 电影</button>
+          <button id="scenario-gaming" class="scenario-tab" type="button" role="tab" aria-selected="false" data-scenario="gaming">游戏</button>
+        </div>
+
+        <div class="scenario-demo">
+          <div class="scenario-demo__header">
+            <div>
+              <h3 id="scenario-title">阅读 / 浏览</h3>
+              <p id="scenario-description">大面积亮度稳定，仅有轻微滚动变化。</p>
+            </div>
+            <div class="frame-counter"><span>FRAME</span><strong id="scenario-frame-index">1 / 4</strong></div>
+          </div>
+
+          <div class="scenario-pipeline">
+            <article class="pipeline-stage">
+              <h3>背光帧</h3>
+              <div id="scenario-frame" class="backlight-frame" aria-label="当前背光帧"></div>
+            </article>
+            <span class="pipeline-arrow" aria-hidden="true">→</span>
+            <article class="pipeline-stage">
+              <h3>CNN 空间特征</h3>
+              <div class="feature-readout">
+                <strong id="feature-summary">稳定高亮区域</strong>
+                <span>平均亮度 <b id="feature-brightness">0.81</b></span>
+                <span>帧间变化 <b id="feature-motion">0.04</b></span>
+              </div>
+            </article>
+            <span class="pipeline-arrow" aria-hidden="true">→</span>
+            <article class="pipeline-stage">
+              <h3>GRU 时间建模</h3>
+              <div class="temporal-state">
+                <span>hₜ₋₁</span><i></i><strong id="scenario-hidden-state">0.18</strong><i></i><span>hₜ</span>
+              </div>
+              <p>累积多帧变化规律</p>
+            </article>
+            <span class="pipeline-arrow" aria-hidden="true">→</span>
+            <article class="pipeline-stage pipeline-stage--probabilities">
+              <h3>场景概率</h3>
+              <div id="scenario-probabilities" class="probability-list"></div>
+            </article>
+          </div>
+
+          <div class="scenario-controls" aria-label="场景序列播放控制">
+            <button id="scenario-play" class="button button--primary" type="button">播放序列</button>
+            <button id="scenario-pause" class="button" type="button">暂停序列</button>
+            <button id="scenario-reset" class="button button--quiet" type="button">重置序列</button>
+          </div>
+          <p id="scenario-disclaimer" class="scenario-disclaimer">本区域使用教学模拟数据解释信息流，不代表真实模型准确率。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="page-width">Neural Network Visualizer · 面向显示场景分类的交互式学习工具</div>
+    </footer>
+    <script type="module" src="./src/app.js"></script>
+  </body>
+</html>

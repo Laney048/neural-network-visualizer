@@ -1,0 +1,15 @@
+{
+  "name": "neural-network-visualizer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "test:e2e": "playwright test",
+    "serve": "python3 -m http.server 4173 --bind 127.0.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@sparticuz/chromium": "^153.0.0"
+  }
+}
